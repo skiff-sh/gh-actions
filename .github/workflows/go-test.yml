@@ -59,7 +59,7 @@ jobs:
       pull-requests: write
       issues: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         name: Checkout
         with:
           token: '${{ github.token }}'
@@ -85,7 +85,7 @@ jobs:
     name: Go lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         name: Checkout
         with:
           token: '${{ github.token }}'

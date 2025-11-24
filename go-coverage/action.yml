@@ -9,26 +9,10 @@ inputs:
     description: The name of the branch to calculate coverage
     required: false
     default: ''
-  go-cover-path:
-    description: The path to the coverage file generated in the test
-    required: false
-    default: ./cover.out
-  threshold-file:
-    description: The threshold for a singular file
-    required: false
-    default: '-1'
-  threshold-package:
-    description: The threshold for a singular package
-    required: false
-    default: '-1'
-  threshold-total:
-    description: The threshold required for the entire repo
-    required: false
-    default: '70'
   testcoverage-config-path:
     description: The path to the .testcoverage.yml file
     required: false
-    default: ''
+    default: './.testcoverage.yml'
 runs:
   using: composite
   steps:
@@ -38,11 +22,6 @@ runs:
       continue-on-error: ${{ inputs.gh-token != '' }}
       with:
         config: ${{ inputs.testcoverage-config-path || null }}
-        local-prefix: github.com/${{ github.repository }}
-        profile: ${{ inputs.go-cover-path }}
-        threshold-file: ${{ inputs.threshold-file }}
-        threshold-package: ${{ inputs.threshold-package }}
-        threshold-total: ${{ inputs.threshold-total }}
     - name: Find PR ID
       shell: bash
       id: pr

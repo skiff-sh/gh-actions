@@ -1,34 +1,14 @@
 name: Go unit test
 description: Run unit tests in Go
 inputs:
-  dirs:
-    description: A space-separated list of directories to test
-    default: ./
-    required: false
   cover-path:
     description: Path to the coverprofile
     required: false
     default: ./cover.out
-  mindepth:
-    description: Set in case there are no go files in the root
-    required: false
-    default: '0'
-  skip-dirs:
-    description: A space-separated list of directories to skip
-    default: ''
-    required: false
 runs:
   using: composite
   steps:
     - name: Go unit test
       shell: bash
       run: |
-        finder=(find ${{inputs.dirs}} -mindepth ${{ inputs.mindepth || 0 }} -not -path '*/.*' -type d)
-        
-        words="${{ inputs.skip-dirs }}"
-        
-        for i in $(echo $words) ; do
-          finder+=(-not -path "$i")
-        done
-        
-        go test -v -coverprofile=${{inputs.cover-path}} -covermode=atomic `"${finder[@]}"`
+        go test -count=1 -v ./... -coverprofile={{inputs.cover-path}} -covermode=atomic -coverpkg=./...
