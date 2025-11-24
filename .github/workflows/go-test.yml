@@ -32,10 +32,6 @@ jobs:
         name: Setup go
       - uses: skiff-sh/gh-actions/go-test@master
         name: Go test
-        with:
-          dirs: ${{ inputs.test-dirs }}
-          mindepth: ${{ inputs.test-mindepth }}
-          skip-dirs: ${{ inputs.test-skip-dirs }}
       - uses: skiff-sh/gh-actions/go-coverage@master
         name: Go coverage
         with:
