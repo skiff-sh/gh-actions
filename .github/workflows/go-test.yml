@@ -1,45 +1,10 @@
 on:
   workflow_call:
     inputs:
-      test-dirs:
-        description: Space-separated list of directories to test
-        required: false
-        default: ./
-        type: string
-      test-skip-dirs:
-        description: Space-separated list of directories to skip in testing
-        required: false
-        default: ''
-        type: string
-      go-cover-path:
-        description: The path to the coverage file generated in the test
-        required: false
-        default: ./cover.out
-        type: string
-      threshold-file:
-        description: The threshold for a singular file
-        required: false
-        default: '-1'
-        type: string
-      threshold-package:
-        description: The threshold for a singular package
-        required: false
-        default: '-1'
-        type: string
-      threshold-total:
-        description: The threshold required for the entire repo
-        required: false
-        default: '70'
-        type: string
-      test-mindepth:
-        description: Set to non-zero if there are no go files immediately within any dirs.
-        required: false
-        default: ''
-        type: string
       testcoverage-config-path:
         description: The path to the .testcoverage.yml file
         required: false
-        default: ''
+        default: './.testcoverage.yml'
         type: string
       workflow-ref:
         description: If running this on a branch e.g. for testing, you can specify that branch here
@@ -75,10 +40,6 @@ jobs:
         name: Go coverage
         with:
           ref-name: ${{ github.ref_name }}
-          go-cover-path: ${{ inputs.go-cover-path }}
-          threshold-file: ${{ inputs.threshold-file }}
-          threshold-package: ${{ inputs.threshold-package }}
-          threshold-total: ${{ inputs.threshold-total }}
           gh-token: ${{ secrets.GITHUB_TOKEN }}
           testcoverage-config-path: ${{ inputs.testcoverage-config-path }}
   go-lint:
